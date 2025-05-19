@@ -1,0 +1,21 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f2f2f2;
+}
+
+#controls {
+  margin-bottom: 20px;
+}
+
+input, button {
+  padding: 8px;
+  margin: 5px;
+  font-size: 16px;
+}
+
+#output {
+  background: #fff;
+  padding: 15px;
+  border: 1px solid #ccc;
+}
