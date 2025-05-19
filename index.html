@@ -1,20 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Graph Traversal: BFS & DFS</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>BST Search and Sort (Auto Input)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    pre {
+      background-color: #f4f4f4;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+  </style>
 </head>
 <body>
-  <h2>Graph Traversal Demo</h2>
-  <div>
-    <p><strong>Graph Structure:</strong> {1: [2, 3], 2: [4, 5], 3: [], 4: [], 5: []}</p>
-    <label for="start">Start Node:</label>
-    <input type="number" id="start" placeholder="Enter start node (e.g., 1)" />
-    <button onclick="runBFS()">Run BFS</button>
-    <button onclick="runDFS()">Run DFS</button>
+  <h2>Binary Search Tree - Auto Insert, Search, and Sort</h2>
+  <div id="output">
+    <pre id="result">Running...</pre>
   </div>
-  <div id="result"></div>
-  <script src="script.js"></script>
+
+  <script>
+    // Node class
+    class Node {
+      constructor(value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+      }
+    }
+
+    // Binary Search Tree class
+    class BST {
+      constructor() {
+        this.root = null;
+      }
+
+      insert(value) {
+        const newNode = new Node(value);
+        if (!this.root) {
+          this.root = newNode;
+          return;
+        }
+        let current = this.root;
+        while (true) {
+          if (value === current.value) return; // Skip duplicates
+          if (value < current.value) {
+            if (!current.left) {
+              current.left = newNode;
+              return;
+            }
+            current = current.left;
+          } else {
+            if (!current.right) {
+              current.right = newNode;
+              return;
+            }
+            current = current.right;
+          }
+        }
+      }
+
+      search(value) {
+        let current = this.root;
+        while (current) {
+          if (value === current.value) return true;
+          if (value < current.value) current = current.left;
+          else current = current.right;
+        }
+        return false;
+      }
+
+      inOrderTraversal(node = this.root, result = []) {
+        if (!node) return;
+        this.inOrderTraversal(node.left, result);
+        result.push(node.value);
+        this.inOrderTraversal(node.right, result);
+        return result;
+      }
+    }
+
+    // Create tree and give hardcoded inputs
+    const bst = new BST();
+
+    const valuesToInsert = [50, 30, 70, 20, 40, 60, 80];
+    const valuesToSearch = [40, 90];
+
+    let output = '';
+
+    // Insert values
+    output += 'Inserting values: ' + valuesToInsert.join(', ') + '\n';
+    valuesToInsert.forEach(val => bst.insert(val));
+
+    // Search
+    output += '\nSearching values:\n';
+    valuesToSearch.forEach(val => {
+      const found = bst.search(val);
+      output += `  ${val} → ${found ? 'Found' : 'Not Found'}\n`;
+    });
+
+    // Sort
+    const sorted = bst.inOrderTraversal();
+    output += '\nIn-order (Sorted) Traversal:\n  ' + sorted.join(', ');
+
+    // Display result
+    document.getElementById('result').innerText = output;
+  </script>
 </body>
 </html>
